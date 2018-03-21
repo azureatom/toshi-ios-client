@@ -1241,11 +1241,13 @@ struct Localized {
     static let yap_missing_password_error_description = LocalizedKey.yap_missing_password_error_description.currentValue
 }
 
-/*
 enum LocalizedPluralKey: String, StringCaseListable {
     case
-    plural_one,
-    plural_two
+    group_participants_header_title,
+    message_requests_description,
+    passphrase_sign_in_button_placeholder,
+    passphrase_sign_in_error,
+    ratings_count
 
     func currentValue(for count: Int) -> String {
         let format = NSLocalizedString(self.rawValue, comment: "")
@@ -1255,14 +1257,53 @@ enum LocalizedPluralKey: String, StringCaseListable {
 
 enum LocalizedPlural {
     
-    /// Value in en: "Going for %d plurals"
-    static func plural_one(for count: Int) -> String {
-        return LocalizedPluralKey.plural_one.currentValue(for: count)
+    /// Values in en:
+    /// - one: "%d Participant"
+    /// - other: "%d Participants"
+    ///
+    /// - Parameter count: The count of items to show a plural for.
+    /// - Returns: The localized string appropriate to the given count. 
+    static func group_participants_header_title(for count: Int) -> String {
+        return LocalizedPluralKey.group_participants_header_title.currentValue(for: count)
     }
     
-    /// Value in en: "There are %d noises"
-    static func plural_two(for count: Int) -> String {
-        return LocalizedPluralKey.plural_two.currentValue(for: count)
+    /// Values in en:
+    /// - one: "%d person wants to start a chat"
+    /// - other: "%d people want to start a chat"
+    ///
+    /// - Parameter count: The count of items to show a plural for.
+    /// - Returns: The localized string appropriate to the given count. 
+    static func message_requests_description(for count: Int) -> String {
+        return LocalizedPluralKey.message_requests_description.currentValue(for: count)
+    }
+    
+    /// Values in en:
+    /// - one: "%d more word"
+    /// - other: "%d more words"
+    ///
+    /// - Parameter count: The count of items to show a plural for.
+    /// - Returns: The localized string appropriate to the given count. 
+    static func passphrase_sign_in_button_placeholder(for count: Int) -> String {
+        return LocalizedPluralKey.passphrase_sign_in_button_placeholder.currentValue(for: count)
+    }
+    
+    /// Values in en:
+    /// - one: "%d word you typed does not exist in passphrases."
+    /// - other: "%d of the words you typed do not exist in passphrases."
+    ///
+    /// - Parameter count: The count of items to show a plural for.
+    /// - Returns: The localized string appropriate to the given count. 
+    static func passphrase_sign_in_error(for count: Int) -> String {
+        return LocalizedPluralKey.passphrase_sign_in_error.currentValue(for: count)
+    }
+    
+    /// Values in en:
+    /// - one: "%d rating"
+    /// - other: "%d ratings"
+    ///
+    /// - Parameter count: The count of items to show a plural for.
+    /// - Returns: The localized string appropriate to the given count. 
+    static func ratings_count(for count: Int) -> String {
+        return LocalizedPluralKey.ratings_count.currentValue(for: count)
     }
 }
-*/
