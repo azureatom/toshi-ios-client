@@ -18,10 +18,64 @@ import XCTest
 
 class GeneratedCodeTests: XCTestCase {
 
+    /// An enum representing all currently supported languages.
+    /// Each key should be the name of the .lproj file so localized strings can be loaded
+    /// regardless of the language of the device or sim running the tests.
+    enum SupportedLanguages: String, StringCaseListable {
+        case
+        Base,
+        en // This is a workaround for a bug with StringCaseListable freaking out with single-case enums, which will (hopefully) go away in Swift 5
+
+        var isDeveloperLanguage: Bool {
+            switch self {
+            case .Base,
+                 .en:
+                return true
+            }
+        }
+
+        var bundle: Bundle {
+            let bundleName: String
+            switch self {
+            case .en:
+                bundleName = SupportedLanguages.Base.rawValue
+            default:
+                bundleName = rawValue
+            }
+
+            let bundlePath = Bundle.main.path(forResource: bundleName, ofType: ".lproj")!
+            return Bundle(path: bundlePath)!
+        }
+
+        func localizedString(for key: String) -> String {
+            return bundle.localizedString(forKey: key, value: nil, table: nil)
+        }
+    }
+
     func testValuesExistForAllLocalizedStringKeys() {
         LocalizedKey.allCases.forEach { key in
-            let value = NSLocalizedString(key.rawValue, comment: "")
-            XCTAssertNotEqual(value, key.rawValue, "\(key.rawValue) does not have a value in Localizable.strings!")
+            SupportedLanguages.allCases.forEach { language in
+                let value = language.localizedString(for: key.rawValue)
+                XCTAssertNotEqual(value, key.rawValue, "\(key.rawValue) does not have a value in the \(language.rawValue) Localizable.strings!")
+            }
+        }
+    }
+
+    func testValuesExistForLocalizedPluralKeys() {
+        LocalizedPluralKey.allCases.forEach { key in
+            SupportedLanguages.allCases.forEach { language in
+                let format = language.localizedString(for: key.rawValue)
+                let zeroValue = String.localizedStringWithFormat(format, 0)
+                XCTAssertNotEqual(zeroValue, key.rawValue, "\(key.rawValue) does not have a value in the \(language.rawValue) Localizable.stringsdict for 0!")
+
+                let oneValue = String.localizedStringWithFormat(format, 1)
+                XCTAssertNotEqual(oneValue, key.rawValue, "\(key.rawValue) does not have a value in the \(language.rawValue) Localizable.stringsdict for 1!")
+
+                if language.isDeveloperLanguage {
+                    // Given English pluralization rules, the values for zero and one should not be the same.
+                    XCTAssertNotEqual(zeroValue, oneValue, "Zero value and one value are both \(zeroValue) in \(language.rawValue) for \(key.rawValue)!")
+                }
+            }
         }
     }
 }
