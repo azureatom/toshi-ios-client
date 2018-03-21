@@ -1,4 +1,4 @@
-// This file is machine-generated. Please do not edit it by hand.
+// This file is machine-generated. DO NOT EDIT IT BY HAND - your edits will get overwritten.
 
 import Foundation
 
