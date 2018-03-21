@@ -8,7 +8,7 @@ enum LocalizedKey: String, StringCaseListable {
     {% endif %}{% endfor %}
 
     var currentValue: String {
-        return NSLocalizedString(self.rawValue, comment: "")
+        return NSLocalizedString(rawValue, comment: "")
     }
 }
 
@@ -25,7 +25,7 @@ enum LocalizedPluralKey: String, StringCaseListable {
     {% endif %}{% endfor %}
 
     func currentValue(for count: Int) -> String {
-        let format = NSLocalizedString(self.rawValue, comment: "")
+        let format = NSLocalizedString(rawValue, comment: "")
         return String.localizedStringWithFormat(format, count)
     }
 }
@@ -36,7 +36,7 @@ enum LocalizedPlural {
     /// - {{ value }}{% endfor %}
     ///
     /// - Parameter count: The count of items to show a plural for.
-    /// - Returns: The localized string appropriate to the given count. 
+    /// - Returns: The localized string appropriate to the given count.
     static func {{ plural.key }}(for count: Int) -> String {
         return LocalizedPluralKey.{{ plural.key }}.currentValue(for: count)
     }{% if not forloop.last %}
