@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum LocalizedKey: String {
+enum LocalizedKey: String, StringCaseListable {
     case
     APN_Message,
     CONTACT_DETAIL_COMM_TYPE_INSECURE,
@@ -1242,7 +1242,7 @@ struct Localized {
 }
 
 /*
-enum LocalizedPluralKey: String {
+enum LocalizedPluralKey: String, StringCaseListable {
     case
     plural_one,
     plural_two

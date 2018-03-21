@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum LocalizedKey: String {
+enum LocalizedKey: String, StringCaseListable {
     case
     {% for string in localized_strings %}{{ string.key }}{% if not forloop.last %},
     {% endif %}{% endfor %}
@@ -20,7 +20,7 @@ struct Localized {
 }
 
 /*
-enum LocalizedPluralKey: String {
+enum LocalizedPluralKey: String, StringCaseListable {
     case
     {% for string in localized_plurals %}{{ string.key }}{% if not forloop.last %},
     {% endif %}{% endfor %}
