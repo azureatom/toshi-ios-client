@@ -49,7 +49,7 @@ final class DappInfoView: UIView {
 
     private(set) lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = Theme.preferredDisplayName()
+        label.font = Theme.preferredDisplayNameMedium()
         label.textAlignment = .center
 
         return label
@@ -138,7 +138,10 @@ final class DappInfoView: UIView {
         mainStackView.left(to: self, offset: .defaultMargin)
         mainStackView.right(to: self, offset: -.defaultMargin)
 
+        titleLabel.height(24)
+        urlLabel.height(15)
         stackView.addArrangedSubview(titleLabel)
+        stackView.addSpacing(.smallInterItemSpacing, after: titleLabel)
         stackView.addArrangedSubview(urlLabel)
 
         mainStackView.addSpacing(.spacingx4, after: horizontalStackView)
