@@ -18,7 +18,8 @@ import UIKit
 import SweetUIKit
 
 final class DappViewController: DisappearingNavBarViewController {
-    let dappConverHeaderHeight: CGFloat = 200
+    let dappCoverHeaderHeight: CGFloat = 200
+    let dappNoCoverHeaderHeight: CGFloat = 44
 
     private let dapp: Dapp
 
@@ -31,7 +32,7 @@ final class DappViewController: DisappearingNavBarViewController {
     }
 
     private lazy var coverImageHeaderView: UIImageView = {
-        let frame = CGRect(origin: .zero, size: CGSize(width: self.view.bounds.width, height: self.dappConverHeaderHeight))
+        let frame = CGRect(origin: .zero, size: CGSize(width: self.view.bounds.width, height: self.dappCoverHeaderHeight))
 
         let header = UIImageView(frame: frame)
         header.clipsToBounds = true
@@ -109,7 +110,11 @@ final class DappViewController: DisappearingNavBarViewController {
         guard let path = dapp.coverUrlString else { return }
         AvatarManager.shared.avatar(for: path) { [weak self] image, _ in
 
-            guard let strongSelf = self, let fetchedImage = image else { return }
+            guard let strongSelf = self else { return }
+            guard let fetchedImage = image else {
+                strongSelf.setupNoCoverImageHeaderView()
+                return
+            }
 
             UIView.transition(with: strongSelf.coverImageHeaderView, duration: 0.3, options: .transitionCrossDissolve, animations: {
 
@@ -117,6 +122,15 @@ final class DappViewController: DisappearingNavBarViewController {
 
             }, completion: nil)
         }
+    }
+
+    private func setupNoCoverImageHeaderView() {
+        var safeArea: CGFloat = 0
+        if #available(iOS 11.0, *) {
+            safeArea = view.safeAreaInsets.top
+        }
+        coverImageHeaderView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: dappNoCoverHeaderHeight + safeArea))
+        tableView.tableHeaderView = coverImageHeaderView
     }
 
     // We do not need to add content to scrollViewContainer used in parent controller,
