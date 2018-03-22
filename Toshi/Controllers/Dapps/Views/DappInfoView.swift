@@ -22,6 +22,7 @@ protocol DappInfoDelegate: class {
 }
 
 final class DappInfoView: UIView {
+    static let descriptionLineSpacing: CGFloat = 19.0
 
     weak var delegate: DappInfoDelegate?
 
