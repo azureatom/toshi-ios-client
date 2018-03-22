@@ -85,7 +85,7 @@ final class DappsTableHeaderView: UIView {
         textField.delegate = self
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
-        textField.placeholder = Localized.dapps_search_placeholder
+        textField.attributedPlaceholder = NSAttributedString(string: Localized.dapps_search_placeholder, attributes: [.foregroundColor : Theme.greyTextColor])
         textField.borderStyle = .none
         textField.layer.cornerRadius = 5
 
