@@ -306,11 +306,27 @@ extension SOFAWebController: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        refreshControl.endRefreshing()
+        navigationEnded(in: webView)
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        navigationEnded(in: webView)
+    }
+
+    private func navigationEnded(in webView: WKWebView) {
         refreshControl.endRefreshing()
+        updateButtonsAndTextField(for: webView)
+    }
+
+    func updateButtonsAndTextField(for webView: WKWebView) {
+        backButton.isEnabled = webView.canGoBack
+        forwardButton.isEnabled = webView.canGoForward
+
+        guard searchTextField.text != webView.url?.absoluteString else {
+            return
+        }
+
+        searchTextField.text = webView.url?.absoluteString
     }
 }
 
