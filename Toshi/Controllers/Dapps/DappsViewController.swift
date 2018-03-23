@@ -112,7 +112,7 @@ final class DappsViewController: UIViewController {
         BasicTableViewCell.register(in: view)
         view.register(UITableViewCell.self, forCellReuseIdentifier: buttonCellReuseIdentifier)
         view.register(UITableViewCell.self, forCellReuseIdentifier: genericCellReuseIdentifier)
-        view.separatorInset = UIEdgeInsets(top: 0, left: 100, bottom: 0, right: .defaultMargin)
+        view.separatorStyle = .none
 
         return view
     }()
@@ -291,6 +291,8 @@ extension DappsViewController: UITableViewDataSource {
             cell.imageViewPath = item.itemIconPath
             cell.leftImageView.layer.cornerRadius = 10
 
+            setCustomSeparators(for: indexPath, on: cell)
+
             return cell
         case .dappSearched:
             let cellData = TableCellData(title: item.displayTitle, subtitle: item.dapp?.url.absoluteString, leftImagePath: item.itemIconPath)
@@ -311,6 +313,14 @@ extension DappsViewController: UITableViewDataSource {
                                                                     right: -.defaultMargin))
             cell.separatorInset = .zero
             return cell
+        }
+    }
+
+    private func setCustomSeparators(for indexPath: IndexPath, on cell: RectImageTitleSubtitleTableViewCell) {
+        if dataSource.numberOfItems(in: indexPath.section) == (indexPath.row + 1) {
+            cell.sectionSeparator.alpha = 1
+        } else {
+            cell.customSeparator.alpha = 1
         }
     }
 

@@ -23,6 +23,22 @@ final class RectImageTitleSubtitleTableViewCell: UITableViewCell {
         }
     }
 
+    lazy var sectionSeparator: UIView = {
+        let customSeparator = UIView()
+        customSeparator.backgroundColor = Theme.borderColor
+        customSeparator.alpha = 0
+
+        return customSeparator
+    }()
+
+    lazy var customSeparator: UIView = {
+        let customSeparator = UIView()
+        customSeparator.backgroundColor = Theme.borderColor
+        customSeparator.alpha = 0
+
+        return customSeparator
+    }()
+
     lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.font = Theme.preferredProTextSemibold()
@@ -67,11 +83,23 @@ final class RectImageTitleSubtitleTableViewCell: UITableViewCell {
         leftImageView.image = nil
         titleLabel.text = nil
         subtitleLabel.text = nil
+        sectionSeparator.alpha = 0
+        customSeparator.alpha = 0
 
         leftImageView.layer.cornerRadius = 0
     }
 
     private func addSubviewsAndConstraints() {
+        contentView.addSubview(customSeparator)
+        customSeparator.bottom(to: contentView)
+        customSeparator.left(to: contentView, offset: 100)
+        customSeparator.right(to: contentView, offset: -.largeInterItemSpacing)
+        customSeparator.height(CGFloat.lineHeight)
+        contentView.addSubview(sectionSeparator)
+        
+        sectionSeparator.edgesToSuperview(excluding: .top)
+        sectionSeparator.height(CGFloat.lineHeight)
+
         contentView.addSubview(leftImageView)
         let stackView = UIStackView()
         stackView.axis = .vertical
