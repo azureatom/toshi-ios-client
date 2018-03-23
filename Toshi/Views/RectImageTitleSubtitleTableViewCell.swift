@@ -92,7 +92,7 @@ final class RectImageTitleSubtitleTableViewCell: UITableViewCell {
     }
 
     private func setupLeftImageView() {
-        leftImageView.size(CGSize(width: 78, height: 78))
+        leftImageView.size(CGSize(width: 72, height: 72))
         leftImageView.centerYToSuperview()
         leftImageView.left(to: contentView, offset: BasicTableViewCell.horizontalMargin)
     }
