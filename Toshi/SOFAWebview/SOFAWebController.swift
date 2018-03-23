@@ -95,21 +95,21 @@ final class SOFAWebController: UIViewController {
     }()
 
     private lazy var backButton: UIButton = {
-        let view = UIButton(type: .custom)
+        let view = TintColorChangingButton()
         view.size(CGSize(width: .defaultButtonHeight, height: .defaultButtonHeight))
-        view.tintColor = Theme.tintColor
         view.setImage(#imageLiteral(resourceName: "web_back").withRenderingMode(.alwaysTemplate), for: .normal)
         view.addTarget(self, action: #selector(self.didTapBackButton), for: .touchUpInside)
+        view.isEnabled = false
 
         return view
     }()
 
     private lazy var forwardButton: UIButton = {
-        let view = UIButton(type: .custom)
+        let view = TintColorChangingButton()
         view.size(CGSize(width: .defaultButtonHeight, height: .defaultButtonHeight))
-        view.tintColor = Theme.tintColor
         view.setImage(#imageLiteral(resourceName: "web_forward").withRenderingMode(.alwaysTemplate), for: .normal)
         view.addTarget(self, action: #selector(self.didTapForwardButton), for: .touchUpInside)
+        view.isEnabled = false
 
         return view
     }()
