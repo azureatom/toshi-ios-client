@@ -259,12 +259,20 @@ final class SOFAWebController: UIViewController {
 
     @objc
     private func didTapBackButton() {
-        webView.goBack()
+        if webView.canGoBack {
+            webView.goBack()
+        } else {
+            updateButtonsAndTextField(for: webView)
+        }
     }
 
     @objc
     private func didTapForwardButton() {
-        webView.goForward()
+        if webView.canGoForward {
+            webView.goForward()
+        } else {
+            updateButtonsAndTextField(for: webView)
+        }
     }
 
     @objc private func closeButtonTapped() {
@@ -342,6 +350,8 @@ extension SOFAWebController: WKScriptMessageHandler {
             } else {
                 DLog("No return from JS")
             }
+
+            self.updateButtonsAndTextField(for: self.webView)
         }
     }
 
