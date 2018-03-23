@@ -34,7 +34,7 @@ final class RectImageTitleSubtitleTableViewCell: UITableViewCell {
     lazy var subtitleLabel: UILabel = {
         let subtitleLabel = UILabel()
 
-        subtitleLabel.font = Theme.preferredRegularSmall()
+        subtitleLabel.font = Theme.preferredFootnote()
         subtitleLabel.textColor = Theme.lightGreyTextColor
         subtitleLabel.setContentHuggingPriority(.required, for: .vertical)
         subtitleLabel.numberOfLines = 2
