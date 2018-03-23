@@ -48,8 +48,15 @@ final class DappsTableHeaderView: UIView {
         let backgroundView = UIView()
         backgroundView.backgroundColor = Theme.tintColor
         backgroundView.isUserInteractionEnabled = false
+        backgroundView.clipsToBounds = true
 
         return backgroundView
+    }()
+
+    private lazy var bubblesImageView: UIImageView = {
+        let bubblesImageView = UIImageView(image: UIImage(named: "bubbles")!)
+
+        return bubblesImageView
     }()
 
     private lazy var collapsedBackgroundView: UIView = {
@@ -161,6 +168,10 @@ final class DappsTableHeaderView: UIView {
 
         addSubview(expandedBackgroundView)
         expandedBackgroundView.edges(to: self)
+
+        expandedBackgroundView.addSubview(bubblesImageView)
+        bubblesImageView.bottom(to: expandedBackgroundView)
+        bubblesImageView.centerX(to: expandedBackgroundView)
 
         addSubview(collapsedBackgroundView)
         collapsedBackgroundView.edges(to: self)
