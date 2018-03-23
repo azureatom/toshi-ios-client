@@ -139,8 +139,8 @@ final class DappInfoView: UIView {
         mainStackView.left(to: self, offset: .defaultMargin)
         mainStackView.right(to: self, offset: -.defaultMargin)
 
-        titleLabel.height(24)
-        urlLabel.height(15)
+        titleLabel.height(24, relation: .equalOrGreater)
+        urlLabel.height(15, relation: .equalOrGreater)
         stackView.addArrangedSubview(titleLabel)
         stackView.addSpacing(.smallInterItemSpacing, after: titleLabel)
         stackView.addArrangedSubview(urlLabel)
