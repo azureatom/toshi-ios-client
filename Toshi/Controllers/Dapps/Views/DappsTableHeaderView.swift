@@ -226,7 +226,7 @@ final class DappsTableHeaderView: UIView {
 
         searchTextField.backgroundColor = UIColor.white.withAlphaComponent(fadeOut(percentage, in: 0.89 ... 1))
         searchTextFieldBackgroundView.alpha = fadeIn(percentage, in: 0.89 ... 1)
-        searchTextField.xInset = (1 - percentage).map(from: 0 ... 1, to: 15 ... 20)
+        searchTextField.xInset = (1 - percentage).map(from: 0 ... 1, to: 14 ... 19)
     }
 
     func didScroll(to percentage: CGFloat) {
