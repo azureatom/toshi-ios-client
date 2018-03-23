@@ -69,7 +69,7 @@ final class DappViewController: DisappearingNavBarViewController {
         view.rowHeight = UITableViewAutomaticDimension
         view.estimatedRowHeight = .defaultCellHeight
         view.separatorStyle = .none
-
+        view.contentInset.bottom = navigationController?.tabBarController?.tabBar.frame.height ?? 0
         if #available(iOS 11.0, *) {
            view.contentInsetAdjustmentBehavior = .never
         }
