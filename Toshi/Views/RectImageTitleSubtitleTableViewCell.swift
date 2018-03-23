@@ -107,7 +107,8 @@ final class RectImageTitleSubtitleTableViewCell: UITableViewCell {
 
         contentView.addSubview(stackView)
 
-        stackView.centerYToSuperview()
+        stackView.top(to: contentView, offset: .spacingx3)
+        stackView.bottom(to: contentView, offset: -.spacingx3)
         stackView.leftToRight(of: leftImageView, offset: BasicTableViewCell.interItemMargin, priority: .required)
         stackView.right(to: contentView, offset: -BasicTableViewCell.horizontalMargin, priority: .required)
 
@@ -120,8 +121,7 @@ final class RectImageTitleSubtitleTableViewCell: UITableViewCell {
     }
 
     private func setupLeftImageView() {
-        leftImageView.top(to: contentView, offset: BasicTableViewCell.imageMargin)
-        leftImageView.bottom(to: contentView, offset: -BasicTableViewCell.imageMargin)
+        leftImageView.centerYToSuperview()
         leftImageView.size(CGSize(width: 72, height: 72))
         leftImageView.left(to: contentView, offset: BasicTableViewCell.horizontalMargin)
     }
