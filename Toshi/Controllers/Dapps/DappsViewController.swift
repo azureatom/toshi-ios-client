@@ -281,6 +281,7 @@ extension DappsViewController: UITableViewDataSource {
 
             cell.textLabel?.attributedText = attributedString
             cell.separatorInset = .zero
+
             return cell
         case .dappFront:
             let cell = tableView.dequeue(RectImageTitleSubtitleTableViewCell.self, for: indexPath)
@@ -289,8 +290,8 @@ extension DappsViewController: UITableViewDataSource {
             cell.leftImageView.image = #imageLiteral(resourceName: "collectible_placeholder")
             cell.imageViewPath = item.itemIconPath
             cell.leftImageView.layer.cornerRadius = 10
-            return cell
 
+            return cell
         case .dappSearched:
             let cellData = TableCellData(title: item.displayTitle, subtitle: item.dapp?.url.absoluteString, leftImagePath: item.itemIconPath)
             let configurator = CellConfigurator()
@@ -300,7 +301,6 @@ extension DappsViewController: UITableViewDataSource {
             cell.leftImageView.layer.cornerRadius = 5
 
             return cell
-
         case .seeAll:
             let cell = tableView.dequeueReusableCell(withIdentifier: buttonCellReuseIdentifier, for: indexPath)
             cell.selectionStyle = .none
@@ -339,6 +339,7 @@ extension DappsViewController: UITableViewDataSource {
             return searchedResultsSectionHeaderHeight
         }
     }
+
 }
 
 extension DappsViewController: DappsSectionHeaderViewDelegate {
