@@ -18,27 +18,3 @@ struct Localized {
     static let {{ string.key }} = LocalizedKey.{{ string.key }}.currentValue{% if not forloop.last %}
     {% endif %}{% endfor %}
 }
-
-enum LocalizedPluralKey: String, StringCaseListable {
-    case
-    {% for string in localized_plurals %}{{ string.key }}{% if not forloop.last %},
-    {% endif %}{% endfor %}
-
-    func currentValue(for count: Int) -> String {
-        let format = NSLocalizedString(rawValue, comment: "")
-        return String.localizedStringWithFormat(format, count)
-    }
-}
-
-enum LocalizedPlural {
-    {% for plural in localized_plurals %}
-    /// Values in {{ developer_language }}:{% for value in plural.values %}
-    /// - {{ value }}{% endfor %}
-    ///
-    /// - Parameter count: The count of items to show a plural for.
-    /// - Returns: The localized string appropriate to the given count.
-    static func {{ plural.key }}(for count: Int) -> String {
-        return LocalizedPluralKey.{{ plural.key }}.currentValue(for: count)
-    }{% if not forloop.last %}
-    {% endif %}{% endfor %}
-}

@@ -112,18 +112,18 @@ func localizablePlurals(from baseLanguageFolder: Folder, fileName: String) throw
 // MARK: - Functions to generate the code
 
 func writeLocalizableFile(withLocalized localizedStrings: [LocalizedString],
-                          localizedPlurals: [LocalizedPlural],
                           inFolder codeFolder: Folder,
                           environment: Environment) throws {
-    let context: [String: Any] = [
-        "developer_language": "en",
-        "localized_strings": localizedStrings,
-        "localized_plurals": localizedPlurals
-    ]
 
-    let fileContents = try environment.renderTemplate(name: "LocalizedStrings.swift.stencil", context: context)
+}
 
-    let file = try codeFolder.createFileIfNeeded(withName: "LocalizedStrings.swift")
+func renderThenWrite(context: [String: Any],
+                     withEnvironment environment: Environment,
+                     fileName: String,
+                     outputFolder codeFolder: Folder) throws {
+    let fileContents = try environment.renderTemplate(name: "\(fileName).stencil", context: context)
+
+    let file = try codeFolder.createFileIfNeeded(withName: fileName)
     try file.write(string: fileContents)
     print("Rendered \(file.name)")
 }
@@ -142,20 +142,41 @@ let generatedFolder = try toshiFolder.subfolder(named: "Generated")
 let templatesFolder = try generatedFolder.subfolder(named: "Templates")
 let codeFolder = try generatedFolder.subfolder(named: "Code")
 
-let localizableFileName = "Localizable.strings"
-let localizablePluralsFileName = "Localizable.stringsdict"
-
 let fileSystemLoader = FileSystemLoader(paths: [ Path(templatesFolder.path) ])
 let environment = Environment(loader: fileSystemLoader)
 
-let localizableStringsChanged = try hasFileChanged(named: localizableFileName)
-let localizablePluralsChanged = try hasFileChanged(named: localizablePluralsFileName)
+// MARK: Localized strings
 
-if localizableStringsChanged || localizablePluralsChanged {
-    try writeLocalizableFile(withLocalized: try localizableStrings(from: baseLanguageFolder, fileName: localizableFileName),
-                             localizedPlurals: try localizablePlurals(from: baseLanguageFolder, fileName: localizablePluralsFileName),
-                             inFolder: codeFolder,
-                             environment: environment)
+let localizableFileName = "Localizable.strings"
+let localizableOutputName = "LocalizedStrings.swift"
+
+if try hasFileChanged(named: localizableFileName) {
+    let localizedStrings = try localizableStrings(from: baseLanguageFolder, fileName: localizableFileName)
+    try renderThenWrite(context: [
+                            "developer_language": "en",
+                            "localized_strings": localizedStrings
+                        ],
+                        withEnvironment: environment,
+                        fileName: localizableOutputName,
+                        outputFolder: codeFolder)
 } else {
-    print("Neither \(localizableFileName) nor \(localizablePluralsFileName) have changed, not regenerating")
+    print("\(localizableFileName) hasn't changed, not regenerating \(localizableOutputName)")
+}
+
+// MARK: Localized plurals
+
+let localizablePluralsFileName = "Localizable.stringsdict"
+let localizablePluralOutputName = "LocalizedPluralStrings.swift"
+
+if try hasFileChanged(named: localizablePluralsFileName) {
+    let localizedPlurals = try localizablePlurals(from: baseLanguageFolder, fileName: localizablePluralsFileName)
+    try renderThenWrite(context: [
+                            "developer_language": "en",
+                            "localized_plurals": localizedPlurals
+                        ],
+                        withEnvironment: environment,
+                        fileName: localizablePluralOutputName,
+                        outputFolder: codeFolder)
+} else {
+    print("\(localizablePluralsFileName) hasn't changed, not regenerating \(localizablePluralOutputName)")
 }
